@@ -19,6 +19,10 @@ This project is a Spring Boot application for managing live sports events, featu
 5. **Kafka** receives event update messages on the `live-events` topic.
 6. **Consumers** (other services or integration tests) can read event updates from Kafka.
 
+## Sequence Diagram
+
+![Sequence Diagram](images/live-sports-events-diagram.png)
+
 ## Requirements
 - Java 21
 - Gradle
