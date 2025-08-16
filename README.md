@@ -7,6 +7,18 @@ This project is a Spring Boot application for managing live sports events, featu
 - Embedded Kafka and Testcontainers for integration testing
 - H2 in-memory database for development
 
+## Data Flow
+
+1. **Client** sends an HTTP request to the REST API (e.g., create/update event).
+2. **Controller Layer** receives the request and calls the appropriate service.
+3. **Service Layer** processes the business logic:
+   - Saves/updates the event in the database.
+   - If the event is live, starts a thread to periodically fetch live info.
+   - Publishes event updates to Kafka.
+4. **Repository Layer** persists event data in the H2 database.
+5. **Kafka** receives event update messages on the `live-events` topic.
+6. **Consumers** (other services or integration tests) can read event updates from Kafka.
+
 ## Requirements
 - Java 21
 - Gradle

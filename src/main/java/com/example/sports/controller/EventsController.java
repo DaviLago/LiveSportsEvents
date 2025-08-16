@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.example.sports.dto.event.EventPostDto;
 import com.example.sports.dto.event.EventPostResponseDto;
-import com.example.sports.enums.Status;
 import com.example.sports.model.Event;
 import com.example.sports.service.EventService;
 import com.example.sports.service.LiveService;
@@ -33,13 +32,7 @@ public class EventsController {
     public ResponseEntity<EventPostResponseDto> createEvent(@Valid @RequestBody EventPostDto dto) {
         log.info("Creating/updating event with request: {}", dto);
         Event event = eventService.save(new Event(dto));
-        if (event.getStatus().equals(Status.LIVE)) {
-            log.info("Event {} is now live", event.getId());
-            liveService.startLiveUpdatesForEvent(event);
-        } else {
-            log.info("Event {} is no longer live", event.getId());
-            liveService.stopLiveUpdatesForEvent(event.getId());
-        }
+        liveService.update(event);
         log.info("Event created/updated with ID: {}", event.getId());
         return ResponseEntity.ok(event.toResponseDto());
     }
