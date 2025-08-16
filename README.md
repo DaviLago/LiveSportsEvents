@@ -30,10 +30,10 @@ This project is a Spring Boot application for managing live sports events, featu
 ## Running the Application
 
 1. **Start Kafka (for local development):**
+
    You can use Docker:
    ```bash
-   docker run -d --name zookeeper -p 2181:2181 zookeeper:3.7
-   docker run -d --name kafka -p 9092:9092 --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 --env KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 --env KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 confluentinc/cp-kafka:7.5.0
+   docker compose up -d
    ```
 
 2. **Run the application:**
@@ -42,11 +42,29 @@ This project is a Spring Boot application for managing live sports events, featu
    ```
 
 3. **API Endpoints:**
-   - `POST /v1/events` - Create or update an event
-   - Kafka topic: `live-events` for event updates
+    - `POST /v1/events` - Create or update an event
 
-4. **Swagger UI:**
+4. **Kafka:**
+    - Topic: `live-events` for event updates
+
+5. **Swagger UI:**
    Visit `http://localhost:8080/swagger-ui.html` for API documentation.
+
+### Create a Live Event
+
+```bash
+curl -X POST http://localhost:8080/v1/events \
+   -H "Content-Type: application/json" \
+   -d '{"eventId":"123","status":"LIVE"}'
+```
+
+### Stop a Live Event
+
+```bash
+curl -X POST http://localhost:8080/v1/events \
+   -H "Content-Type: application/json" \
+   -d '{"eventId":"123","status":"NOT_LIVE"}'
+```
 
 ## Testing
 
