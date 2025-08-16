@@ -72,7 +72,7 @@ curl -X POST http://localhost:8080/v1/events \
   ```bash
   ./gradlew test
   ```
-- Integration tests use Embedded Kafka or Kafka Testcontainer.
+- Integration tests use Embedded Kafka.
 
 ## Configuration
 
